@@ -1,4 +1,4 @@
-window.gaiaonline = function(password) {
+window.gaiaonlineApi = function(password) {
 
 
    /*
