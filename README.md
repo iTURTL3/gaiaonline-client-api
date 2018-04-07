@@ -4,7 +4,7 @@ GaiaOnline Client API works by including the script on the <b>gaiaonline.com</b>
 ## Getting Started
 create an instance of the api by passing your account password as the first argument.
 ```JS
-window.api = gaiaonline('myAccountPassword');
+window.api = window.gaiaonlineApi('myAccountPassword');
 ```
 
 ## Public API Functions
