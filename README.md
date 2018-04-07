@@ -50,7 +50,7 @@ window.api.buyVendWithGcash(storeId, vendId, function() {
 ```
 **Bid on a vend with gold/plat:**
 ```JS
-window.api.bidOnVend(storeId, vendId, bid, function() {
+window.api.bidOnVend(storeId, vendId, bidAmount, function() {
    console.log('bid placed on vend!');
 }, function() {
    console.log('unable to place bid on vend!');
@@ -66,7 +66,7 @@ window.api.createTrade(username, function() {
 ```
 **Edit your store:**
 ```JS
-window.api.editStore(code, function() {
+window.api.editStore(bbCode, function() {
    console.log('store edited!');
 }, function() {
    console.log('unable to edit store!');
@@ -90,7 +90,7 @@ window.api.useSpecialItem(itemSerial, itemOption, function() {
 ```
 **Craft an alchemy formula:**
 ```JS
-window.api.craftFormula(formulaId, path, function() {
+window.api.craftFormula(formulaId, formulaPath, function() {
    console.log('formula crafted!');
 }, function(quantity) {
    console.log('unable to craft formula!');
@@ -99,7 +99,7 @@ window.api.craftFormula(formulaId, path, function() {
 **Claim a daily candy:**
 > known daily candy ids: 1, 2, 3, 4, 5, 8, 12, 1271, 1279
 ```JS
-window.api.dailyCandy(id, function() {
+window.api.dailyCandy(candyId, function() {
    console.log('daily candy claimed!');
 }, function() {
    console.log('unable to claim daily candy!');
@@ -108,7 +108,7 @@ window.api.dailyCandy(id, function() {
 **Claim a daily treat:**
 > known daily treat types: home, mygaia, market, forum, games
 ```JS
-window.api.dailyTreat(type, function() {
+window.api.dailyTreat(treatType, function() {
    console.log('daily treat claimed!');
 }, function() {
    console.log('unable to claim daily treat!');
