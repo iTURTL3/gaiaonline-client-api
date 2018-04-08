@@ -150,3 +150,6 @@ window.api.userId(function(userId) {
 ## Non-Public API Functions
 **Award a user an achievement**
 <p>This function is not public because it would be abused example of function results: https://www.gaiaonline.com/achievements/public/37043881</p>
+
+## Author
+some of my gaiaonline accounts are listed here: https://www.gaiaonline.com/gsearch/users/jakemadness
