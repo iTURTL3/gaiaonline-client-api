@@ -7,7 +7,7 @@
 // @license      GPL
 // @match        *://www.gaiaonline.com/*
 // @require      https://cdn.rawgit.com/jakemadness/gaiaonline-api/master/gaiaonline.api.js
-// @require      https://cdn.rawgit.com/jakemadness/gaiaonline-api/master/gaiaonline.modifications.js
+// @require      https://cdn.rawgit.com/jakemadness/gaiaonline-api/master/userscript.modifications.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
