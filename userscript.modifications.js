@@ -1,4 +1,4 @@
-window.gaiaonlineModifications = function(api) {
+window.userscriptModifications = function(api) {
 
    var patternCallback = function(data, pattern, callback) {
       var patterns = {
