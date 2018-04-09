@@ -92,7 +92,7 @@ window.api.useSpecialItem(itemSerial, itemOption, function() {
 ```JS
 window.api.craftFormula(formulaId, formulaPath, function() {
    console.log('formula crafted!');
-}, function(quantity) {
+}, function() {
    console.log('unable to craft formula!');
 });
 ```
@@ -124,7 +124,7 @@ window.api.dumpsterDive(function() {
 ```JS
 window.api.awardAchievement(userId, achievementId, function() {
    console.log('achievement awarded!');
-}, function(quantity) {
+}, function() {
    console.log('unable to award achievement!');
 });
 ```
@@ -132,7 +132,7 @@ window.api.awardAchievement(userId, achievementId, function() {
 ```JS
 window.api.itemQuantity(itemId, function(quantity) {
    console.log('you own ' + quantity + ' of this item!');
-}, function(quantity) {
+}, function() {
    console.log('you own 0 of this item!');
 });
 ```
@@ -140,7 +140,7 @@ window.api.itemQuantity(itemId, function(quantity) {
 ```JS
 window.api.userId(function(userId) {
    console.log('current user id is ' + userId + '!');
-}, function(quantity) {
+}, function() {
    console.log('unable to get current user id');
 });
 ```
