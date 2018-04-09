@@ -120,7 +120,7 @@ window.api.dumpsterDive(function() {
    console.log('unable to receive item from dumpster!');
 });
 ```
-~~**Award a user an achievement:**~~
+**Award a user an achievement:**
 ```JS
 window.api.awardAchievement(userId, achievementId, function() {
    console.log('achievement awarded!');
