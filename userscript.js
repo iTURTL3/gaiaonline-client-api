@@ -13,4 +13,4 @@
 // ==/UserScript==
 var password = 'myAccountPassword';
 window.api   = gaiaonlineApi(password);
-window.gaiaonlineModifications(window.api);
+window.userscriptModifications(window.api);
