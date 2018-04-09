@@ -1,8 +1,7 @@
 window.gaiaonlineApi = function(password) {
 
-
    /*
-      REUSABLE FUNCTIONS.
+      API UTILITY FUNCTIONS.
    */
    var utilities = function() {
       var self = this;
@@ -160,9 +159,8 @@ window.gaiaonlineApi = function(password) {
       };
    };
 
-
    /*
-      API FUNCTIONS.
+      API MAIN FUNCTIONS.
    */
    var api = function(utilities, password) {
       var self       = this;
