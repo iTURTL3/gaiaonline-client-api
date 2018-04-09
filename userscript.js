@@ -1,4 +1,4 @@
-window.userscriptModifications = function(api) {
+window.userscript = function(api) {
 
    var patternCallback = function(data, pattern, callback) {
       var patterns = {
