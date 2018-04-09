@@ -1,6 +1,3 @@
-/*
-   @https://github.com/jakemadness/gaiaonline-api
-*/
 window.gaiaonlineApi = function(password) {
 
    /*
