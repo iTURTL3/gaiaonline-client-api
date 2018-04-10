@@ -82,7 +82,7 @@ window.userscript = function(api) {
    };
 
    var itemQuantity = function() {
-      if ( window.location.href.match(/\/itemdetail\/([0-9]+)/i) ) {
+      if ( (match = window.location.href.match(/\/itemdetail\/([0-9]+)/i)) ) {
          api.itemQuantity(match['1'], function(quantity) {
             document.getElementById('vend_item_title').innerHTML += ' (' + quantity + ' owned)';
          }, function(quantity) {
