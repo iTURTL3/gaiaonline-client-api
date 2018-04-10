@@ -156,13 +156,13 @@ var utilities = function() {
       self.httpRequest('POST', url, ['X-Requested-With', 'XMLHttpRequest', 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'], post, callback);
    };
    self.createElement = function(tag, attributes, value) {
-	   var element       = document.createElement(tag);
-	   element.innerHTML = value || '';
-	   for ( var i = 0; attributes && i < attributes.length; i += 2 ) {
-	      element.setAttribute(attributes[i], attributes[i + 1]);
-	   }
-	   return element;
-	};
+      var element       = document.createElement(tag);
+      element.innerHTML = value || '';
+      for ( var i = 0; attributes && i < attributes.length; i += 2 ) {
+         element.setAttribute(attributes[i], attributes[i + 1]);
+      }
+      return element;
+   };
    self.appendChildren = function(element, children) {
       for ( var i = 0; i < children.length; i++ ) {
          element.appendChild(children[i]);
@@ -174,21 +174,21 @@ var utilities = function() {
       }
    };
    self.findElementsBy = function(elements, attribute, pattern) {
-	   for ( var found = [], i = 0; i < elements.length; i++ ) {
-	      if ( elements[i].hasAttribute(attribute) && elements[i].getAttribute(attribute).match(new RegExp(pattern)) ) {
-	         found.push(elements[i]);
-	      }
-	   }
-	   return found;
-	};
+      for ( var found = [], i = 0; i < elements.length; i++ ) {
+         if ( elements[i].hasAttribute(attribute) && elements[i].getAttribute(attribute).match(new RegExp(pattern)) ) {
+            found.push(elements[i]);
+         }
+      }
+      return found;
+   };
    self.elementChildValue = function(element, tag, index, attribute) {
-	   var elements = element.getElementsByTagName(tag);
-	   var child    = elements[index] || false;
-		if ( child ) {
-	      return (attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
-		}
-	};
-	self.parseNumber = function(number) {
-	   return Number(number.replace(/[^0-9]/g, ''));
-	};
+      var elements = element.getElementsByTagName(tag);
+      var child    = elements[index] || false;
+      if ( child ) {
+         return (attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
+      }
+   };
+   self.parseNumber = function(number) {
+      return Number(number.replace(/[^0-9]/g, ''));
+   };
 };
