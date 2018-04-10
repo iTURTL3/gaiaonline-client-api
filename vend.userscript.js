@@ -1,4 +1,4 @@
-window.userscript = function(api) {
+window.vendUserscript = function(api) {
 
    var quickBuyWithGold = function(link, match) {
       link.setAttribute('data-store', match['1']);
