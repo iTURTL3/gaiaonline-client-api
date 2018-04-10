@@ -1,4 +1,4 @@
-window.goApi = function(utilities, password) {
+window.gApi = function(utilities, password) {
    var self     = this;
    self.pattern = function(data, pattern) {
       var patterns = {
