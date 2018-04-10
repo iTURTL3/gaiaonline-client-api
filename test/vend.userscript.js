@@ -1,4 +1,4 @@
-var vendModifications = function(utilities, api, password) {
+window.vendModifications = function(utilities, api, password) {
    var self              = this;
    self.quickBuyWithGold = function(link, match) {
       link.setAttribute('data-store', match['1']);
