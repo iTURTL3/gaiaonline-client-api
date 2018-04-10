@@ -176,8 +176,8 @@ window.gUtilities = function() {
          element.removeChild(element.lastChild);
       }
    };
-   self.findElementsBy = function(elements, attribute, pattern) {
-      for ( var found = [], i = 0; i < elements.length; i++ ) {
+   self.findElementsBy = function(element, tag, attribute, pattern) {
+      for ( var found = [], elements = element.getElementsByTagName(tag), i = 0; i < elements.length; i++ ) {
          if ( elements[i].hasAttribute(attribute) && elements[i].getAttribute(attribute).match(new RegExp(pattern)) ) {
             found.push(elements[i]);
          }
@@ -190,8 +190,11 @@ window.gUtilities = function() {
       if ( child ) {
          return (attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
       }
+      else {
+         return false;
+      }
    };
    self.parseNumber = function(number) {
-      return Number(number.replace(/[^0-9]/g, ''));
+      return Number(String(number).replace(/[^0-9]/g, ''));
    };
 };
