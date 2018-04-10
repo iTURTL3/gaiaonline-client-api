@@ -24,7 +24,7 @@ window.api = function(utilities, password) {
       return utilities.md5(utilities.md5(password) + nonce);
    };
    self.useNonce = function(callback) {
-      utilities.getRequest('/api/v1/cashshop/generatenonce?' + self.utilities.queryString({
+      utilities.getRequest('/api/v1/cashshop/generatenonce?' + utilities.queryString({
          'ts': Date.now()
       }), function(data) {
          ((nonce = self.pattern(data, 'nonce')) && callback(nonce['0']));
