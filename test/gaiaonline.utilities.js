@@ -1,3 +1,6 @@
+/*
+   @https://github.com/jakemadness/gaiaonline-api
+*/
 window.gUtilities = function() {
    var self = this;
    self.md5 = function(string) {
