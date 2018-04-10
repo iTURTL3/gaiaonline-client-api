@@ -1,4 +1,4 @@
-window.utilities = function() {
+window.goUtilities = function() {
    var self = this;
    self.md5 = function(string) {
       function f1(a, b) {
