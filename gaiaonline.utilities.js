@@ -188,13 +188,16 @@ window.gUtilities = function() {
       var elements = element.getElementsByTagName(tag);
       var child    = elements[index] || false;
       if ( child ) {
-         return (attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
-      }
-      else {
-         return false;
+         return self.stripWhitespace(attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
       }
    };
+   self.stripWhitespace = function(string) {
+      string = string.replace(/\s+/g, ' ');
+      return string.trim();
+   }
    self.parseNumber = function(number) {
-      return Number(String(number).replace(/[^0-9]/g, ''));
+      number = String(number);
+      number = number.replace(/[^0-9]/g, '');
+      return Number(number);
    };
 };
