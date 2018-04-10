@@ -1,3 +1,6 @@
+/*
+   @https://github.com/jakemadness/gaiaonline-api
+*/
 window.gApi = function(utilities, password) {
    var self     = this;
    self.pattern = function(data, pattern) {
