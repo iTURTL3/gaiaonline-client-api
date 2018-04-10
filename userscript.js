@@ -1,14 +1,5 @@
 window.userscript = function(api) {
 
-   var patternCallback = function(data, pattern, callback) {
-      var patterns = {
-         'marketplace': /\/marketplace\//i,
-         'item':        /\/itemdetail\/([0-9]+)/i,
-         'justAdded':   /\/vendsearch\/\?sortBy=91$/i
-      };
-      ((match = data.match(patterns[pattern])) && callback(match));
-   };
-
    var quickBuyWithGold = function(link, match) {
       link.setAttribute('data-store', match['1']);
       link.setAttribute('data-vend',  match['2']);
@@ -80,32 +71,32 @@ window.userscript = function(api) {
    };
 
    var quickVendLinks = function() {
-      patternCallback(window.location.href, 'marketplace', function(match) {
+      if ( window.location.href.match(/\/marketplace\//i) ) {
          for ( var links = document.getElementsByTagName('a'), i = 0; i < links.length; i++ ) {
             ((match = links[i].href.match(/\/([0-9]+)\/buy\/\?id=([0-9]+)/i))   && quickBuyWithGold(links[i],  match));
             ((match = links[i].href.match(/\/([0-9]+)\/gcash\/\?id=([0-9]+)/i)) && quickBuyWithGcash(links[i], match));
             ((match = links[i].href.match(/\/mystore\/cancel\/\?id=([0-9]+)/i)) && quickCancel(links[i],       match));
             ((match = links[i].href.match(/\/mystore\/cancelall/i))             && quickCancelAll(links[i],    match));
          }
-      });
+      }
    };
 
    var itemQuantity = function() {
-      patternCallback(window.location.href, 'item', function(match) {
+      if ( window.location.href.match(/\/itemdetail\/([0-9]+)/i) ) {
          api.itemQuantity(match['1'], function(quantity) {
             document.getElementById('vend_item_title').innerHTML += ' (' + quantity + ' owned)';
          }, function(quantity) {
             document.getElementById('vend_item_title').innerHTML += ' (0 owned)';
          });
-      });
+      }
    };
 
    var justAddedReload = function() {
-      patternCallback(window.location.href, 'justAdded', function(match) {
+      if ( window.location.href.match(/\/vendsearch\/\?sortBy=91$/i) ) {
          window.setTimeout(function() {
             window.location.reload();
          }, 5000);
-      });
+      }
    };
 
    var passwordAutoFill = function() {
