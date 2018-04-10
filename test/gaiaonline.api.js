@@ -1,4 +1,4 @@
-var api = function(utilities, password) {
+window.api = function(utilities, password) {
    var self     = this;
    self.pattern = function(data, pattern) {
       var patterns = {
