@@ -200,4 +200,8 @@ window.gUtilities = function() {
       number = number.replace(/[^0-9]/g, '');
       return Number(number);
    };
+   self.numberFormat = function(number) {
+      number = String(number);
+      return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+   };
 };
