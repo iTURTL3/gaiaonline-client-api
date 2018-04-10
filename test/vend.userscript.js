@@ -1,3 +1,6 @@
+/*
+   @https://github.com/jakemadness/gaiaonline-api
+*/
 window.vendModifications = function(utilities, api, password) {
    var self              = this;
    self.quickBuyWithGold = function(link, match) {
