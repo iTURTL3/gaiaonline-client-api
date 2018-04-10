@@ -1,4 +1,4 @@
-var utilities = function() {
+window.utilities = function() {
    var self = this;
    self.md5 = function(string) {
       function f1(a, b) {
