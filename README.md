@@ -142,12 +142,12 @@ window.api.dumpsterDive(function() {
    console.log('unable to receive item from dumpster!');
 });
 ```
-**Award a user an achievement:**
+**Add an item to wishlist:**
 ```JS
-window.api.awardAchievement(userId, achievementId, function() {
-   console.log('achievement awarded!');
+window.api.addItemToWishlist(itemId, function() {
+   console.log('item added to wishlist!');
 }, function() {
-   console.log('unable to award achievement!');
+   console.log('unable to add item to wishlist!');
 });
 ```
 **Check how many of an item you own:**
