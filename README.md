@@ -142,6 +142,14 @@ window.api.dumpsterDive(function() {
    console.log('unable to receive item from dumpster!');
 });
 ```
+**Award a user an achievement:**
+```JS
+window.api.awardAchievement(userId, achievementId, function() {
+   console.log('achievement awarded!');
+}, function() {
+   console.log('unable to award achievement!');
+});
+```
 **Add an item to wishlist:**
 ```JS
 window.api.addItemToWishlist(itemId, function() {
