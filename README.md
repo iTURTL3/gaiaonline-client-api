@@ -1,8 +1,8 @@
 # GaiaOnline Client API
 GaiaOnline Client API works by including the script on the <b>gaiaonline.com</b> website (preferably in a userscript) then calling its functions. I made this API in 2015 but it still works exceptionally well in 2018.
 
-# Vend Userscript Using This API
-https://greasyfork.org/en/scripts/40448-gaiaonline-vend-modifications
+# Userscripts Using This API
+**vend script:** https://greasyfork.org/en/scripts/40448-gaiaonline-vend-modifications
 
 ## Getting Started
 include both gaiaonline.utilities.js and gaiaonline.api.js files on the gaiaonline website. Once you've included those files on the website you can create an instance of the API like the following example:
