@@ -204,4 +204,30 @@ window.gUtilities = function() {
       number = String(number);
       return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
    };
+   self.shortenNumber = function(number, places) {
+      number = self.parseNumber(number);
+      if ( number >= 1e15 ) {
+         number /= 1e15;
+         return number.toFixed(places) + 'Q';
+      }
+      else if ( number >= 1e12 ) {
+         number /= 1e12;
+         return number.toFixed(places) + 'T';
+      }
+      else if ( number >= 1e9 ) {
+         number /= 1e9;
+         return number.toFixed(places) + 'B';
+      }
+      else if ( number >= 1e6 ) {
+         number /= 1e6;
+         return number.toFixed(places) + 'M';
+      }
+      else if ( number >= 1e3 ) {
+         number /= 1e3;
+         return number.toFixed(places) + 'K';
+      }
+      else {
+         return number;
+      }
+   };
 };
