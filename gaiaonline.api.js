@@ -19,7 +19,8 @@ window.gApi = function(utilities, password) {
          'dailyCandy':       /your\sreward\sis/i,
          'dailyTreat':       /\"amount\":([0-9]+)/i,
          'dumpsterDive':     /you\sfound/i,
-         'awardAchievement': /true$/i
+         'awardAchievement': /true$/i,
+         'addToWishlist':    /\"status\":\"success\"/i
       };
       return data.match(patterns[pattern]);
    };
@@ -197,6 +198,13 @@ window.gApi = function(utilities, password) {
    };
    self.awardAchievement = function(userId, achievementId, success, error) {
       // example results: https://www.gaiaonline.com/achievements/public/37043881
+   };
+   self.addItemToWishlist = function(itemId, success, error) {
+      self.useNonce(function(nonce) {
+         utilities.getRequest('/account/asyncaddwishlist/' + nonce + '/' + itemId, function(data) {
+            (self.pattern(data, 'addToWishlist') ? (success && success()) : (error && error()));
+         });
+      });
    };
    self.itemQuantity = function(itemId, success, error) {
       self.gsi(['[111,[' + itemId + ']]'], function(data) {
