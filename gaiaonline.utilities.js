@@ -230,4 +230,9 @@ window.gUtilities = function() {
          return number;
       }
    };
+   self.sortBy = function(array, key, descending) {
+      return array.sort(function(a, b) {
+         return (descending ? b[key] - a[key] : a[key] - b[key]);
+      });
+   };
 };
