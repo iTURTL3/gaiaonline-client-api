@@ -39,7 +39,7 @@ window.gApi = function(utilities, password) {
          'v': 'json',
          'm': '[' + methods.join(',') + ']'
       }), function(data) {
-         callback(JSON.parse(data));
+         callback(JSON.parse(decodeURIComponentdata(data)));
       });
    };
    self.createVend = function(itemId, itemSerial, days, hours, minutes, price, success, error) {
