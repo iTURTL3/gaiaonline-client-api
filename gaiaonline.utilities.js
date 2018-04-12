@@ -141,6 +141,10 @@ window.gUtilities = function() {
       }
       return query.slice(0, -1);
    };
+   self.urlDecode = function(data) {
+      data = data.replace(/\+/g, ' ');
+      return decodeURIComponent(data);
+   };
    self.httpRequest = function(method, url, headers, post, callback) {
       var request = new XMLHttpRequest();
       request.onreadystatechange = function() {
