@@ -145,6 +145,50 @@ window.gUtilities = function() {
       data = data.replace(/\+/g, ' ');
       return decodeURIComponent(data);
    };
+   self.stripWhitespace = function(string) {
+      string = string.replace(/\s+/g, ' ');
+      return string.trim();
+   };
+   self.sortBy = function(array, key, descending) {
+      return array.sort(function(a, b) {
+         return (descending ? b[key] - a[key] : a[key] - b[key]);
+      });
+   };
+   self.parseNumber = function(number) {
+      number = String(number);
+      number = number.replace(/[^0-9]/g, '');
+      return Number(number);
+   };
+   self.numberFormat = function(number) {
+      number = String(number);
+      return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+   };
+   self.shortenNumber = function(number, places) {
+      number = self.parseNumber(number);
+      if ( number >= 1e15 ) {
+         number /= 1e15;
+         return number.toFixed(places) + 'Q';
+      }
+      else if ( number >= 1e12 ) {
+         number /= 1e12;
+         return number.toFixed(places) + 'T';
+      }
+      else if ( number >= 1e9 ) {
+         number /= 1e9;
+         return number.toFixed(places) + 'B';
+      }
+      else if ( number >= 1e6 ) {
+         number /= 1e6;
+         return number.toFixed(places) + 'M';
+      }
+      else if ( number >= 1e3 ) {
+         number /= 1e3;
+         return number.toFixed(places) + 'K';
+      }
+      else {
+         return number;
+      }
+   };
    self.httpRequest = function(method, url, headers, post, callback) {
       var request = new XMLHttpRequest();
       request.onreadystatechange = function() {
@@ -194,49 +238,5 @@ window.gUtilities = function() {
       if ( child ) {
          return self.stripWhitespace(attribute && child.hasAttribute(attribute) ? child.getAttribute(attribute) : child.innerText);
       }
-   };
-   self.stripWhitespace = function(string) {
-      string = string.replace(/\s+/g, ' ');
-      return string.trim();
-   }
-   self.parseNumber = function(number) {
-      number = String(number);
-      number = number.replace(/[^0-9]/g, '');
-      return Number(number);
-   };
-   self.numberFormat = function(number) {
-      number = String(number);
-      return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-   };
-   self.shortenNumber = function(number, places) {
-      number = self.parseNumber(number);
-      if ( number >= 1e15 ) {
-         number /= 1e15;
-         return number.toFixed(places) + 'Q';
-      }
-      else if ( number >= 1e12 ) {
-         number /= 1e12;
-         return number.toFixed(places) + 'T';
-      }
-      else if ( number >= 1e9 ) {
-         number /= 1e9;
-         return number.toFixed(places) + 'B';
-      }
-      else if ( number >= 1e6 ) {
-         number /= 1e6;
-         return number.toFixed(places) + 'M';
-      }
-      else if ( number >= 1e3 ) {
-         number /= 1e3;
-         return number.toFixed(places) + 'K';
-      }
-      else {
-         return number;
-      }
-   };
-   self.sortBy = function(array, key, descending) {
-      return array.sort(function(a, b) {
-         return (descending ? b[key] - a[key] : a[key] - b[key]);
-      });
    };
 };
