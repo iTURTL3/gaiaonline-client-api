@@ -37,7 +37,7 @@ window.gApi = function(utilities, password) {
    self.gsi = function(methods, callback) {
       utilities.postRequest('/chat/gsi/gateway.php', utilities.queryString({
          'v': 'json',
-         'm': '[' + methods.join(',') + ']'
+         'm': JSON.stringify(methods)
       }), function(data) {
          ((data = utilities.urlDecode(data)) && (data = JSON.parse(data)) && callback(data));
       });
@@ -207,27 +207,27 @@ window.gApi = function(utilities, password) {
       });
    };
    self.itemQuantity = function(itemId, success, error) {
-      self.gsi(['[111,[' + itemId + ']]'], function(data) {
+      self.gsi([[111,[' + itemId + ']]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.itemInformation = function(itemId, success, error) {
-      self.gsi(['[720,[' + itemId + ']]'], function(data) {
+      self.gsi([[720,[' + itemId + ']]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.userId = function(success, error) {
-      self.gsi(['[100,[]]'], function(data) {
+      self.gsi([[100,[]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.goldAmount = function(success, error) {
-      self.gsi(['[113,[true]]'], function(data) {
+      self.gsi([[113,[true]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.gCashAmount = function(success, error) {
-      self.gsi(['[116,[]]'], function(data) {
+      self.gsi([[116,[]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
