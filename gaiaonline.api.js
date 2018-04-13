@@ -35,7 +35,7 @@ window.gApi = function(utilities, password) {
       });
    };
    self.gsi = function(methods, callback) {
-      utilities.postRequest('/chat/gsi/gateway.php', utilities.queryString({
+      utilities.getRequest('/chat/gsi/gateway.php?' + utilities.queryString({
          'v': 'json',
          'X': Date.now(),
          'm': JSON.stringify(methods)
