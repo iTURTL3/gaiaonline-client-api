@@ -161,7 +161,7 @@ window.gUtilities = function() {
    };
    self.getValuesBy = function(array, key) {
       for ( var values = [], i = 0; i < array.length; i++ ) {
-         values.push(array[key]);
+         values.push(array[i][key]);
       }
       return values;
    };
