@@ -37,8 +37,8 @@ window.gApi = function(utilities, password) {
    self.gsi = function(methods, callback) {
       utilities.postRequest('/chat/gsi/gateway.php', utilities.queryString({
          'v': 'json',
-         'm': JSON.stringify(methods),
-         'X': Date.now()
+         'X': Date.now(),
+         'm': JSON.stringify(methods)
       }), function(data) {
          ((data = utilities.urlDecode(data)) && (data = JSON.parse(data)) && callback(data));
       });
