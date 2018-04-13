@@ -149,10 +149,21 @@ window.gUtilities = function() {
       string = string.replace(/\s+/g, ' ');
       return string.trim();
    };
+   self.arrayUnique = function(array) {
+      return array.filter(function(item, position, self) {
+         return self.indexOf(item) == position;
+      });
+   };
    self.sortBy = function(array, key, descending) {
       return array.sort(function(a, b) {
          return (descending ? b[key] - a[key] : a[key] - b[key]);
       });
+   };
+   self.getValuesBy = function(array, key) {
+      for ( var values = [], i = 0; i < array.length; i++ ) {
+         values.push(array[key]);
+      }
+      return values;
    };
    self.parseNumber = function(number) {
       number = String(number);
