@@ -1,4 +1,4 @@
-(function(utilities, api) {
+window.sniper = function(utilities, api, password) {
 
    /*
       VARIABLES.
@@ -176,12 +176,4 @@
       window.clearInterval(self.interval);
    };
 
-
-   /*
-      INIT.
-   */
-   self.getVends();
-   self.start();
-
-
-})(window.utilities, window.api);
+};
