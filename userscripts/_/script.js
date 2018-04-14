@@ -103,7 +103,7 @@ window.sniper = function(utilities, api, password) {
                vends[i].formattedAveragePrice = utilities.numberFormat(vends[i].averagePrice);
                vends[i].buyPricePercentage    = vends[i].buyPrice / vends[i].averagePrice * 100;
                vends[i].type                  = (vends[i].buyPricePercentage == 100 && 'exact' || vends[i].buyPricePercentage < 100 && 'low' || vends[i].buyPricePercentage > 100 && 'high' || 'unknown');
-               vends[i].percentage            = utilities.toFixed(vends[i].type == 'exact' && 100 || vends[i].type == 'low' && 100 - vends[i].buyPricePercentage || vends[i].type == 'high' && vends[i].buyPricePercentage - 100 || 0, 2);
+               vends[i].percentage            = (vends[i].type == 'exact' && 100 || vends[i].type == 'low' && 100 - vends[i].buyPricePercentage || vends[i].type == 'high' && vends[i].buyPricePercentage - 100 || 0).toFixed(2);
             }
          }
          callback(vends);
