@@ -208,12 +208,12 @@ window.gApi = function(utilities, password) {
       });
    };
    self.itemQuantity = function(itemId, success, error) {
-      self.gsi([[111,[' + itemId + ']]], function(data) {
+      self.gsi([[111,[itemId]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.itemInformation = function(itemId, success, error) {
-      self.gsi([[720,[' + itemId + ']]], function(data) {
+      self.gsi([[720,[itemId]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
