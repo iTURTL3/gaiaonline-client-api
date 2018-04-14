@@ -145,34 +145,26 @@ window.gUtilities = function() {
       data = data.replace(/\+/g, ' ');
       return decodeURIComponent(data);
    };
+   self.httpRequest = function(method, url, headers, post, callback) {
+      var request = new XMLHttpRequest();
+      request.onreadystatechange = function() {
+         (this.readyState == 4 && callback(this.responseText));
+      };
+      request.open(method, url, true);
+      for ( var i = 0; i < headers.length; i += 2 ) {
+         request.setRequestHeader(headers[i], headers[i + 1]);
+      }
+      request.send(post);
+   };
+   self.getRequest = function(url, callback) {
+      self.httpRequest('GET', url, [], null, callback);
+   };
+   self.postRequest = function(url, post, callback) {
+      self.httpRequest('POST', url, ['X-Requested-With', 'XMLHttpRequest', 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'], post, callback);
+   };
    self.stripWhitespace = function(string) {
       string = string.replace(/\s+/g, ' ');
       return string.trim();
-   };
-   self.arrayUnique = function(array) {
-      return array.filter(function(item, position, self) {
-         return self.indexOf(item) == position;
-      });
-   };
-   self.sortBy = function(array, key, descending) {
-      return array.sort(function(a, b) {
-         return (descending ? b[key] - a[key] : a[key] - b[key]);
-      });
-   };
-   self.stringWrapArray = function(array, prefix, suffix) {
-      for ( var wrapped = [], i = 0; i < array.length; i++ ) {
-         wrapped.push(prefix + array[i] + suffix);
-      }
-      return wrapped;
-   };
-   self.getValuesBy = function(array, key) {
-      for ( var values = [], i = 0; i < array.length; i++ ) {
-         values.push(array[i][key]);
-      }
-      return values;
-   };
-   self.toFixed = function(number, places) {
-      return Number(number.toFixed(places));
    };
    self.parseNumber = function(number) {
       number = String(number);
@@ -208,23 +200,6 @@ window.gUtilities = function() {
       else {
          return number;
       }
-   };
-   self.httpRequest = function(method, url, headers, post, callback) {
-      var request = new XMLHttpRequest();
-      request.onreadystatechange = function() {
-         (this.readyState == 4 && callback(this.responseText));
-      };
-      request.open(method, url, true);
-      for ( var i = 0; i < headers.length; i += 2 ) {
-         request.setRequestHeader(headers[i], headers[i + 1]);
-      }
-      request.send(post);
-   };
-   self.getRequest = function(url, callback) {
-      self.httpRequest('GET', url, [], null, callback);
-   };
-   self.postRequest = function(url, post, callback) {
-      self.httpRequest('POST', url, ['X-Requested-With', 'XMLHttpRequest', 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'], post, callback);
    };
    self.createElement = function(tag, attributes, value) {
       var element       = document.createElement(tag);
