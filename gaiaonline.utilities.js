@@ -165,6 +165,9 @@ window.gUtilities = function() {
       }
       return values;
    };
+   self.toFixed = function(number, places) {
+      return Number(number.toFixed(places));
+   };
    self.parseNumber = function(number) {
       number = String(number);
       number = number.replace(/[^0-9]/g, '');
