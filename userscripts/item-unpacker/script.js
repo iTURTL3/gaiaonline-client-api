@@ -27,6 +27,8 @@ window.itemUnpacker = function(utilities, api, password, serials, option) {
             self.stop();
             console.log('finished unpacking items!');
          }
+      }, function() {
+         ++self.index;
       });
    };
 
