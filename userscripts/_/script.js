@@ -3,7 +3,7 @@ window.sniper = function(utilities, api, password) {
    /*
       VARIABLES.
    */
-   var self              = {};
+   var self              = this;
    self.averageBuyPrices = {};
    self.interval         = false;
    self.updateRate       = 4000;
