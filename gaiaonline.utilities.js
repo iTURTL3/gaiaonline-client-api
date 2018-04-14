@@ -159,6 +159,12 @@ window.gUtilities = function() {
          return (descending ? b[key] - a[key] : a[key] - b[key]);
       });
    };
+   self.stringWrapArray = function(array, prefix, suffix) {
+      for ( var wrapped = [], i = 0; i < array.length; i++ ) {
+         wrapped.push(prefix + array[i] + suffix);
+      }
+      return wrapped;
+   };
    self.getValuesBy = function(array, key) {
       for ( var values = [], i = 0; i < array.length; i++ ) {
          values.push(array[i][key]);
