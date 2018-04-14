@@ -14,16 +14,8 @@ window.api       = new window.gApi(utilities, password);
 ```
 
 ## API Functions
-**Create a hashed password + nonce chap:**
-```JS
-console.log('your chap is ' + window.api.createChap(nonce));
-```
-**Generate a nonce:**
-```JS
-window.api.useNonce(function(nonce) {
-   console.log('your generated nonce is ' + nonce + '!');
-});
-```
+All API functions that need a nonce or hashed password + nonce chap will create them internally so all you need to pass is the function arguments and an optional success function and optional error function.
+
 **Use gsi methods:**
 ```JS
 window.api.gsi(methods, function(data) {
