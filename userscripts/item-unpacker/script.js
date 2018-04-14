@@ -1,4 +1,4 @@
-window.itemUnpacker = function(utilities, api, password, serials, option) {
+window.itemUnpacker = function(utilities, api, serials, option) {
 
    var self      = this;
    self.serials  = [];
