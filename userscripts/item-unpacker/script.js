@@ -1,4 +1,4 @@
-window.itemUnpacker = function(utilities, api, password, serials) {
+window.itemUnpacker = function(utilities, api, password, serials, option) {
 
    var self      = this;
    self.serials  = [];
@@ -8,8 +8,9 @@ window.itemUnpacker = function(utilities, api, password, serials) {
    self.delay    = 4000;
    self.interval = false;
 
-   self.start = function(serials) {
+   self.start = function(serials, option) {
       self.serials  = serials;
+      self.option   = option;
       self.maxIndex = serials.length;
       self.interval = setInterval(self.tick, self.delay);
    };
@@ -29,6 +30,6 @@ window.itemUnpacker = function(utilities, api, password, serials) {
       });
    };
 
-   self.start(serials);
+   self.start(serials, option);
 
 };
