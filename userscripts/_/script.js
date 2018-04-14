@@ -1,17 +1,14 @@
 window.sniper = function(utilities, api, password) {
 
-   /*
-      VARIABLES.
-   */
+
+
    var self              = this;
    self.averageBuyPrices = {};
    self.interval         = false;
    self.updateRate       = 4000;
 
 
-   /*
-      MAIN FUNCTIONS.
-   */
+
    self.parseVendData = function(htmlData) {
       var html = utilities.createElement('html', [], htmlData);
       var rows = utilities.findElementsBy(html, 'tr', 'class', 'vend_rows_ex_row(A|B)');
@@ -85,41 +82,38 @@ window.sniper = function(utilities, api, password) {
       return methods;
    };
 
-   self.cacheAverageBuyPrices = function(data) {
-      if ( data['0']['1'] ) {
-         for ( var id in data['0']['2'] ) {
-            self.averageBuyPrices[id] = data['0']['2'][id].marketPrice;
-         }
-      }
-   };
-
-   self.attachAverageBuyPrices = function(vends, callback) {
-      api.gsi(self.averageBuyPriceMethods(vends), function(data) {
-         self.cacheAverageBuyPrices(data);
-         for ( var i = 0; i < vends.length; i++ ) {
-            if ( vends[i].itemId in self.averageBuyPrices ) {
-               vends[i].averagePrice          = self.averageBuyPrices[vends[i].itemId];
-               vends[i].shortAveragePrice     = utilities.shortenNumber(vends[i].averagePrice, 2);
-               vends[i].formattedAveragePrice = utilities.numberFormat(vends[i].averagePrice);
-               vends[i].buyPricePercentage    = vends[i].buyPrice / vends[i].averagePrice * 100;
-               vends[i].type                  = (vends[i].buyPricePercentage == 100 && 'exact' || vends[i].buyPricePercentage < 100 && 'low' || vends[i].buyPricePercentage > 100 && 'high' || 'unknown');
-               vends[i].percentage            = (vends[i].type == 'exact' && 100 || vends[i].type == 'low' && 100 - vends[i].buyPricePercentage || vends[i].type == 'high' && vends[i].buyPricePercentage - 100 || 0).toFixed(2);
+   self.cacheAverageBuyPrices = function(vends, callback) {
+      var methods = self.averageBuyPriceMethods(vends);
+      (methods.length > 0 && api.gsi(methods, function(data) {
+         if ( data['0']['1'] ) {
+            for ( var id in data['0']['2'] ) {
+               self.averageBuyPrices[id] = data['0']['2'][id].marketPrice;
             }
          }
          callback(vends);
-      });
+      }) || callback(vends));
    };
 
    self.getVends = function() {
       utilities.getRequest('/marketplace/vendsearch/?sortBy=91', function(data) {
-         self.attachAverageBuyPrices(self.parseVendData(data), self.updateVendHTML);
+         self.cacheAverageBuyPrices(self.parseVendData(data), function(vends) {
+            for ( var i = 0; i < vends.length; i++ ) {
+               if ( vends[i].itemId in self.averageBuyPrices ) {
+                  vends[i].averagePrice          = self.averageBuyPrices[vends[i].itemId];
+                  vends[i].shortAveragePrice     = utilities.shortenNumber(vends[i].averagePrice, 2);
+                  vends[i].formattedAveragePrice = utilities.numberFormat(vends[i].averagePrice);
+                  vends[i].buyPricePercentage    = vends[i].buyPrice / vends[i].averagePrice * 100;
+                  vends[i].type                  = (vends[i].buyPricePercentage == 100 && 'exact' || vends[i].buyPricePercentage < 100 && 'low' || vends[i].buyPricePercentage > 100 && 'high' || 'unknown');
+                  vends[i].percentage            = (vends[i].type == 'exact' && 100 || vends[i].type == 'low' && 100 - vends[i].buyPricePercentage || vends[i].type == 'high' && vends[i].buyPricePercentage - 100 || 0).toFixed(2);
+               }
+            }
+            self.updateVendHTML(vends);
+         });
       });
    };
 
 
-   /*
-      EVENT FUNCTIONS.
-   */
+
    self.item = function() {
       var element = this;
       var data    = JSON.parse(element.parentElement.getAttribute('data-vend'));
@@ -180,5 +174,7 @@ window.sniper = function(utilities, api, password) {
       self.getVends();
       self.start();
    };
+
+
 
 };
