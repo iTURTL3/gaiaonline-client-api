@@ -192,7 +192,7 @@ window.api.gCashAmount(function(cash) {
 ```
 **Inventory:**
 ```JS
-window.api.inventory(function(inventory) {
+window.api.inventory(page, perPage, function(inventory) {
    console.log(inventory);
 }, function() {
    console.log('unable to get inventory!');
