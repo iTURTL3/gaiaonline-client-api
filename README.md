@@ -190,6 +190,14 @@ window.api.gCashAmount(function(cash) {
    console.log('unable to get Gcash amount!');
 });
 ```
+**Inventory:**
+```JS
+window.api.inventory(function(inventory) {
+   console.log(inventory);
+}, function() {
+   console.log('unable to get inventory!');
+});
+```
 
 ## Known Function Arguments
 **known daily candy ids:** <p>1, 2, 3, 4, 5, 8, 12, 1271, 1279</p>
