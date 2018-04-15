@@ -237,9 +237,9 @@ window.gApi = function(utilities, password) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
-   self.inventory = function(success, error) {
+   self.inventory = function(page, perPage, success, error) {
       self.sessionId(function(sessionId) {
-         self.gsi([[721, [sessionId, 1, 1000000000]]], function(data) {
+         self.gsi([[721, [sessionId, page, perPage]]], function(data) {
             (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
          });
       });
