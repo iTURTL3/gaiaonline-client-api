@@ -222,6 +222,11 @@ window.gApi = function(utilities, password) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
+   self.sessionId = function(success, error) {
+      self.gsi([[109,[]]], function(data) {
+         (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
+      });
+   };
    self.goldAmount = function(success, error) {
       self.gsi([[113,[true]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
