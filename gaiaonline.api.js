@@ -208,33 +208,40 @@ window.gApi = function(utilities, password) {
       });
    };
    self.itemQuantity = function(itemId, success, error) {
-      self.gsi([[111,[itemId]]], function(data) {
+      self.gsi([[111, [itemId]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.itemInformation = function(itemId, success, error) {
-      self.gsi([[720,[itemId]]], function(data) {
+      self.gsi([[720, [itemId]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.userId = function(success, error) {
-      self.gsi([[100,[]]], function(data) {
+      self.gsi([[100, []]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.sessionId = function(success, error) {
-      self.gsi([[109,[]]], function(data) {
+      self.gsi([[109, []]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.goldAmount = function(success, error) {
-      self.gsi([[113,[true]]], function(data) {
+      self.gsi([[113, [true]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
    self.gCashAmount = function(success, error) {
       self.gsi([[116,[]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
+      });
+   };
+   self.inventory = function(success, error) {
+      self.sessionId(function(sessionId) {
+         self.gsi([[721, [sessionId, 1, 1000000000]]], function(data) {
+            (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
+         });
       });
    };
 };
