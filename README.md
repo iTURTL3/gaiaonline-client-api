@@ -166,6 +166,14 @@ window.api.userId(function(userId) {
    console.log('unable to get current user id!');
 });
 ```
+**The session id of the account you're using:**
+```JS
+window.api.sessionId(function(sessionId) {
+   console.log('current session id is ' + sessionId + '!');
+}, function() {
+   console.log('unable to get current session id!');
+});
+```
 **Gold amount:**
 ```JS
 window.api.goldAmount(function(gold) {
