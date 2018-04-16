@@ -1,4 +1,4 @@
-window.itemUnpacker = function(utilities, api, itemId, option) {
+window.itemUnpacker = function(utilities, api, itemId, option, callback) {
 
    var self      = this;
    self.serials  = [];
@@ -25,7 +25,7 @@ window.itemUnpacker = function(utilities, api, itemId, option) {
       }
       else {
          clearInterval(self.interval);
-         console.log('finished unpacking items!');
+         callback();
       }
    };
 
