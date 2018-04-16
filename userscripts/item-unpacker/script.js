@@ -1,37 +1,36 @@
-window.itemUnpacker = function(utilities, api, serials, option) {
+window.itemUnpacker = function(utilities, api, itemId, option) {
 
    var self      = this;
    self.serials  = [];
-   self.option   = '';
-   self.index    = 0;
-   self.maxIndex = 0;
+   self.interval = null;
    self.delay    = 4000;
-   self.interval = false;
 
-   self.start = function(serials, option) {
-      self.serials  = serials;
-      self.option   = option;
-      self.maxIndex = serials.length;
-      self.interval = setInterval(self.tick, self.delay);
-   };
-
-   self.stop = function() {
-      clearInterval(self.interval);
-   };
-
-   self.tick = function() {
-      api.useSpecialItem(self.serials[self.index], self.option, function() {
-         ++self.index;
-         console.log('item used: ' + self.index + '/' + self.maxIndex);
-         if ( self.index >= self.maxIndex ) {
-            self.stop();
-            console.log('finished unpacking items!');
+   self.getSerials = function(callback) {
+      api.inventory(1, 100000000, function(inventory) {
+         for ( var i = 0; i < inventory.items.length; i++ ) {
+            if ( inventory.items[i].item_id == itemId ) {
+               self.serials.push(inventory.items[i].serial);
+            }
          }
-      }, function() {
-         ++self.index;
+         callback();
       });
    };
 
-   self.start(serials, option);
+   self.useItem = function() {
+      if ( self.serials.length > 0 ) {
+         api.useSpecialItem(self.serials['0'], option, function() {
+            self.serials = self.serials.slice(1);
+            console.log(self.serials.length + ' items left!');
+         });
+      }
+      else {
+         clearInterval(self.interval);
+         console.log('finished unpacking items!');
+      }
+   };
+
+   self.getSerials(function() {
+      self.interval = window.setInterval(self.useItem, self.delay);
+   });
 
 };
