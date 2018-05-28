@@ -20,7 +20,8 @@ window.gApi = function(utilities, password) {
          'dailyTreat':       /\"amount\":([0-9]+)/i,
          'dumpsterDive':     /you\sfound/i,
          'awardAchievement': /true$/i,
-         'addToWishlist':    /\"status\":\"success\"/i
+         'addToWishlist':    /\"status\":\"success\"/i,
+         'donateItem':       /success\!/i
       };
       return data.match(patterns[pattern]);
    };
@@ -205,6 +206,14 @@ window.gApi = function(utilities, password) {
          utilities.getRequest('/account/asyncaddwishlist/' + nonce + '/' + itemId, function(data) {
             (self.pattern(data, 'addToWishlist') ? (success && success()) : (error && error()));
          });
+      });
+   };
+   self.donateItem = function(itemSerial, quantity, success, error) {
+      utilities.postRequest('/inventory/donate/?serial=' + itemSerial, utilities.queryString({
+         'nonce':    'null',
+         'quantity': quantity
+      }), function(data) {
+         (self.pattern(data, 'donateItem') ? (success && success()) : (error && error()));
       });
    };
    self.itemQuantity = function(itemId, success, error) {
