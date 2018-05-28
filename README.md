@@ -150,6 +150,14 @@ window.api.addItemToWishlist(itemId, function() {
    console.log('unable to add item to wishlist!');
 });
 ```
+**Donate Item:**
+```JS
+window.api.donateItem(itemSerial, quantity, function() {
+   console.log('item donated!');
+}, function() {
+   console.log('unable to donate item!');
+});
+```
 **Check how many of an item you own:**
 ```JS
 window.api.itemQuantity(itemId, function(quantity) {
