@@ -209,8 +209,9 @@ window.gApi = function(utilities, password) {
       });
    };
    self.donateItem = function(itemSerial, quantity, success, error) {
-      utilities.postRequest('/inventory/donate/?serial=' + itemSerial, utilities.queryString({
+      utilities.postRequest('/inventory/donate/', utilities.queryString({
          'nonce':    'null',
+         'serial':   itemSerial,
          'quantity': quantity
       }), function(data) {
          (self.pattern(data, 'donateItem') ? (success && success()) : (error && error()));
