@@ -211,7 +211,12 @@ window.gApi = function(utilities, password) {
       });
    };
    self.awardAchievement = function(userId, achievementId, success, error) {
-      // example results: https://www.gaiaonline.com/achievements/public/37043881
+      utilities.postRequest('/gaiaevent/easter2k18/claimAchv/', utilities.queryString({
+         'user_id': userId,
+         'achv_id': achievementId
+      }), function(data) {
+         (self.pattern(data, 'awardAchievement') ? (success && success()) : (error && error()));
+      });
    };
    self.addItemToWishlist = function(itemId, success, error) {
       self.useNonce(function(nonce) {
