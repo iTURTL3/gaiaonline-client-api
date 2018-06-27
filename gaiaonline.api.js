@@ -143,7 +143,8 @@ window.gApi = function(utilities, password) {
       self.useNonce(function(nonce) {
          utilities.postRequest('/marketplace/?tradingpass=1', utilities.queryString({
             'password': password,
-            'nonce':    nonce
+            'nonce':    nonce,
+            'chap':          self.createChap(nonce)
          }), function(data) {
             document.documentElement.innerHTML = data;
          });
