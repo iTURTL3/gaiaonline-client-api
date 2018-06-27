@@ -86,6 +86,14 @@ window.api.editStore(bbCode, function() {
    console.log('unable to edit store!');
 });
 ```
+**Buy trading pass:**
+```JS
+window.api.buyTradingPass(function() {
+   console.log('trading pass bought!');
+}, function() {
+   console.log('unable to buy trading pass!');
+});
+```
 **Gift an item from a store using gold/plat:**
 ```JS
 window.api.giftStoreItem(storeId, itemId, itemName, itemPrice, itemQuantity, recipientId, function() {
