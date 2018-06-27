@@ -141,10 +141,10 @@ window.gApi = function(utilities, password) {
    };
    self.buyTradingPass = function(callback) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/?tradingpass=1', utilities.queryString({
-            'password': password,
-            'nonce':    nonce,
-            'chap':          self.createChap(nonce)
+         utilities.postRequest('/marketplace/', utilities.queryString({
+            'tradingpass': '1',
+            'password':    password,
+            'nonce':       nonce
          }), function(data) {
             document.documentElement.innerHTML = data;
          });
