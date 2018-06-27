@@ -13,6 +13,7 @@ window.gApi = function(utilities, password) {
          'bidOnVend':        /bid\sconfirmed/i,
          'createTrade':      /trade\srequest\sto\s/i,
          'editStore':        /successfully\ssaved\syour\schanges/i,
+         'buyTradingPass':   /trading\spass\spurchased/i,
          'giftStoreItem':    /\"status\":\"success\"/i,
          'useSpecialItem':   /you\sreceived|you\sgot/i,
          'craftFormula':     /congratulations\!/i,
@@ -146,7 +147,7 @@ window.gApi = function(utilities, password) {
             'password':    password,
             'nonce':       nonce
          }), function(data) {
-            document.documentElement.innerHTML = data;
+            (self.pattern(data, 'buyTradingPass') ? (success && success()) : (error && error()));
          });
       });
    };
