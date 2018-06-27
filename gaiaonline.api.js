@@ -140,7 +140,7 @@ window.gApi = function(utilities, password) {
          });
       });
    };
-   self.buyTradingPass = function(callback) {
+   self.buyTradingPass = function(success, error) {
       self.useNonce(function(nonce) {
          utilities.postRequest('/marketplace/', utilities.queryString({
             'tradingpass': '1',
