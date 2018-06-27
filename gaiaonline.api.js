@@ -139,6 +139,17 @@ window.gApi = function(utilities, password) {
          });
       });
    };
+   self.buyTradingPass = function(callback) {
+      self.useNonce(function(nonce) {
+         utilities.postRequest('/marketplace/', utilities.queryString({
+            'tradingpass': '1',
+            'password':    password,
+            'nonce':       nonce
+         }), function(data) {
+            document.documentElement.innerHTML = data;
+         });
+      });
+   };
    self.giftStoreItem = function(storeId, itemId, itemName, itemPrice, itemQuantity, recipientId, success, error) {
       self.useNonce(function(nonce) {
          utilities.postRequest('/api/v1/cashshop/confirmgift', utilities.queryString({
