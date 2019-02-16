@@ -11,8 +11,8 @@ npm install md5
 Require the gaiaonline.api.js module and create an instance of the API like the following example:
 
 ```JS
-var cookies  = 'gaiaonline cookies here';
-var password = 'gaiaonline password here';
+var cookies  = 'gaia55_sid=e2718bx3ev66e47c3ff3613ha623u4pc46cnligmanv2mf2so';
+var password = 'password';
 var api      = new (require('./gaiaonline.api.js'))(cookies, password);
 ```
 
