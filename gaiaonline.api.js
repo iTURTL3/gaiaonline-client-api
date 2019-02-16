@@ -68,7 +68,7 @@ module.exports = function(cookies, password) {
          'giftStoreItem':    /\"status\":\"success\"/i,
          'useSpecialItem':   /you\sreceived|you\sgot|play\sagain/i,
          'dailyCandy':       /your\sreward\sis/i,
-         'dailyTreat':       /\"amount\":([0-9]+)/i,
+         'dailyTreat':       /\"amount\":([^0]+)/i,
          'dumpsterDive':     /you\sfound/i,
          'donateItem':       /success\!/i
       };
