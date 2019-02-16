@@ -1,8 +1,56 @@
-/*
-   @https://github.com/jakemadness/gaiaonline-api
-*/
-window.gApi = function(utilities, password) {
+module.exports = function(cookies, password) {
+
+   /*
+      VARIABLES & DEPENDENCIES.
+   */
    var self     = this;
+   self.md5     = require('md5');
+   self.request = require('request');
+   self.baseUrl = 'https://www.gaiaonline.com/';
+
+   /*
+      REUSABLE FUNCTIONS.
+   */
+   self.httpRequest = function(method, url, headers, post, callback) {
+      self.request({
+         'method':  method,
+         'url':     url,
+         'headers': headers,
+         'body':    post,
+      }, function(error, response, data) {
+         if ( !error ) {
+            callback(data);
+         }
+      });
+   };
+   self.getRequest = function(url, callback) {
+      self.httpRequest('GET', self.baseUrl + url, {
+         'Cookie': cookies
+      }, null, callback);
+   };
+   self.postRequest = function(url, post, callback) {
+      self.httpRequest('POST', self.baseUrl + url, {
+         'X-Requested-With': 'XMLHttpRequest',
+         'Content-Type':     'application/x-www-form-urlencoded; charset=UTF-8',
+         'Cookie':           cookies
+      }, post, callback);
+   };
+   self.queryString = function(object) {
+      var query = '';
+      for ( var key in object ) {
+         query += key         + '=';
+         query += object[key] + '&';
+      }
+      return query.slice(0, -1);
+   };
+   self.urlDecode = function(data) {
+      data = data.replace(/\+/g, ' ');
+      return decodeURIComponent(data);
+   };
+
+   /*
+      MAIN FUNCTIONS.
+   */
    self.pattern = function(data, pattern) {
       var patterns = {
          'nonce':            /(([0-9]+)\.([0-9]+)\.([0-9]+))/,
@@ -15,39 +63,36 @@ window.gApi = function(utilities, password) {
          'editStore':        /successfully\ssaved\syour\schanges/i,
          'buyTradingPass':   /trading\spass\spurchased/i,
          'giftStoreItem':    /\"status\":\"success\"/i,
-         'useSpecialItem':   /you\sreceived|you\sgot/i,
-         'craftFormula':     /congratulations\!/i,
+         'useSpecialItem':   /you\sreceived|you\sgot|play\sagain/i,
          'dailyCandy':       /your\sreward\sis/i,
          'dailyTreat':       /\"amount\":([0-9]+)/i,
          'dumpsterDive':     /you\sfound/i,
-         'awardAchievement': /true$/i,
-         'addToWishlist':    /\"status\":\"success\"/i,
          'donateItem':       /success\!/i
       };
       return data.match(patterns[pattern]);
    };
    self.createChap = function(nonce) {
-      return utilities.md5(utilities.md5(password) + nonce);
+      return self.md5(self.md5(password) + nonce);
    };
    self.useNonce = function(callback) {
-      utilities.getRequest('/api/v1/cashshop/generatenonce?' + utilities.queryString({
+      self.getRequest('api/v1/cashshop/generatenonce?' + self.queryString({
          'ts': Date.now()
       }), function(data) {
          ((nonce = self.pattern(data, 'nonce')) && callback(nonce['0']));
       });
    };
    self.gsi = function(methods, callback) {
-      utilities.postRequest('/chat/gsi/gateway.php', utilities.queryString({
+      self.postRequest('chat/gsi/gateway.php', self.queryString({
          'v': 'json',
          'X': Date.now(),
          'm': JSON.stringify(methods)
       }), function(data) {
-         ((data = utilities.urlDecode(data)) && (data = JSON.parse(data)) && callback(data));
+         ((data = self.urlDecode(data)) && (data = JSON.parse(data)) && callback(data));
       });
    };
    self.createVend = function(itemId, itemSerial, days, hours, minutes, price, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/mystore/sell/', utilities.queryString({
+         self.postRequest('marketplace/mystore/sell/', self.queryString({
             'step':          'submit',
             'gcash_enable':  '1',
             'vend_type':     '3',
@@ -66,7 +111,7 @@ window.gApi = function(utilities, password) {
    };
    self.cancelVend = function(vendId, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/mystore/cancel/', utilities.queryString({
+         self.postRequest('marketplace/mystore/cancel/', self.queryString({
             'step':  'submit',
             'id':    vendId,
             'nonce': nonce,
@@ -78,7 +123,7 @@ window.gApi = function(utilities, password) {
    };
    self.cancelAllVends = function(success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/mystore/cancelall/', utilities.queryString({
+         self.postRequest('marketplace/mystore/cancelall/', self.queryString({
             'nonce': nonce,
             'chap':  self.createChap(nonce)
          }), function(data) {
@@ -88,7 +133,7 @@ window.gApi = function(utilities, password) {
    };
    self.buyVendWithGold = function(storeId, vendId, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/userstore/' + storeId + '/buy/', utilities.queryString({
+         self.postRequest('marketplace/userstore/' + storeId + '/buy/', self.queryString({
             'step':     'submit',
             'id':       vendId,
             'password': password,
@@ -100,7 +145,7 @@ window.gApi = function(utilities, password) {
    };
    self.buyVendWithGcash = function(storeId, vendId, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/userstore/' + storeId + '/gcash/', utilities.queryString({
+         self.postRequest('marketplace/userstore/' + storeId + '/gcash/', self.queryString({
             'step':     'submit',
             'id':       vendId,
             'password': password,
@@ -112,7 +157,7 @@ window.gApi = function(utilities, password) {
    };
    self.bidOnVend = function(storeId, vendId, bidAmount, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/userstore/' + storeId + '/bid/', utilities.queryString({
+         self.postRequest('marketplace/userstore/' + storeId + '/bid/', self.queryString({
             'step':     'submit',
             'id':       vendId,
             'amount':   bidAmount,
@@ -124,7 +169,7 @@ window.gApi = function(utilities, password) {
       });
    };
    self.createTrade = function(username, success, error) {
-      utilities.postRequest('/gaia/bank.php', utilities.queryString({
+      self.postRequest('gaia/bank.php', self.queryString({
          'mode':     'create',
          'username': username
       }), function(data) {
@@ -133,7 +178,7 @@ window.gApi = function(utilities, password) {
    };
    self.editStore = function(bbCode, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/editstore/' + nonce + '/', utilities.queryString({
+         self.postRequest('marketplace/editstore/' + nonce + '/', self.queryString({
             'storefront': bbCode
          }), function(data) {
             (self.pattern(data, 'editStore') ? (success && success()) : (error && error()));
@@ -142,7 +187,7 @@ window.gApi = function(utilities, password) {
    };
    self.buyTradingPass = function(success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/marketplace/', utilities.queryString({
+         self.postRequest('marketplace/', self.queryString({
             'tradingpass': '1',
             'password':    password,
             'nonce':       nonce
@@ -153,7 +198,7 @@ window.gApi = function(utilities, password) {
    };
    self.giftStoreItem = function(storeId, itemId, itemName, itemPrice, itemQuantity, recipientId, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/api/v1/cashshop/confirmgift', utilities.queryString({
+         self.postRequest('api/v1/cashshop/confirmgift', self.queryString({
             'privacy':      'anon',
             'message':      'None',
             'pay_with':     'gold',
@@ -172,24 +217,15 @@ window.gApi = function(utilities, password) {
    };
    self.useSpecialItem = function(itemSerial, itemOption, success, error) {
       self.useNonce(function(nonce) {
-         utilities.postRequest('/inventory/use/' + itemSerial + '/' + itemOption, utilities.queryString({
+         self.postRequest('inventory/use/' + itemSerial + '/' + itemOption, self.queryString({
             'nonce': nonce
          }), function(data) {
             (self.pattern(data, 'useSpecialItem') ? (success && success()) : (error && error()));
          });
       });
    };
-   self.craftFormula = function(formulaId, formulaPath, success, error) {
-      utilities.postRequest('/alchemy/', utilities.queryString({
-         'mode':       'submit',
-         'formula_id': formulaId,
-         'path':       formulaPath
-      }), function(data) {
-         (self.pattern(data, 'craftFormula') ? (success && success()) : (error && error()));
-      });
-   };
    self.dailyCandy = function(candyId, success, error) {
-      utilities.postRequest('/dailycandy/pretty/', utilities.queryString({
+      self.postRequest('dailycandy/pretty/', self.queryString({
          'action': 'issue',
          'list_id': candyId
       }), function(data) {
@@ -197,36 +233,21 @@ window.gApi = function(utilities, password) {
       });
    };
    self.dailyTreat = function(treatType, success, error) {
-      utilities.postRequest('/dailytreat/payout/' + treatType + '/gaia/', utilities.queryString({
+      self.postRequest('dailytreat/payout/' + treatType + '/gaia/', self.queryString({
          '_view': 'json'
       }), function(data) {
          (self.pattern(data, 'dailyTreat') ? (success && success()) : (error && error()));
       });
    };
    self.dumpsterDive = function(success, error) {
-      utilities.postRequest('/dumpsterdive', utilities.queryString({
+      self.postRequest('dumpsterdive', self.queryString({
          'mode': 'showConfirmed'
       }), function(data) {
          (self.pattern(data, 'dumpsterDive') ? (success && success()) : (error && error()));
       });
    };
-   self.awardAchievement = function(userId, achievementId, success, error) {
-      utilities.postRequest('/gaiaevent/easter2k18/claimAchv/', utilities.queryString({
-         'user_id': userId,
-         'achv_id': achievementId
-      }), function(data) {
-         (self.pattern(data, 'awardAchievement') ? (success && success()) : (error && error()));
-      });
-   };
-   self.addItemToWishlist = function(itemId, success, error) {
-      self.useNonce(function(nonce) {
-         utilities.getRequest('/account/asyncaddwishlist/' + nonce + '/' + itemId, function(data) {
-            (self.pattern(data, 'addToWishlist') ? (success && success()) : (error && error()));
-         });
-      });
-   };
    self.donateItem = function(itemSerial, quantity, success, error) {
-      utilities.postRequest('/inventory/donate/', utilities.queryString({
+      self.postRequest('inventory/donate/', self.queryString({
          'nonce':    'null',
          'serial':   itemSerial,
          'quantity': quantity
@@ -236,11 +257,6 @@ window.gApi = function(utilities, password) {
    };
    self.itemQuantity = function(itemId, success, error) {
       self.gsi([[111, [itemId]]], function(data) {
-         (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
-      });
-   };
-   self.itemInformation = function(itemId, success, error) {
-      self.gsi([[720, [itemId]]], function(data) {
          (data['0']['1'] ? (success && success(data['0']['2'])) : (error && error()));
       });
    };
@@ -271,4 +287,5 @@ window.gApi = function(utilities, password) {
          });
       });
    };
+
 };
