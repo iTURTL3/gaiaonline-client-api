@@ -19,12 +19,6 @@ var api      = new (require('./gaiaonline.api.js'))(cookies, password);
 ## API Functions
 All API functions that need a nonce or hashed password + nonce chap will create them internally so all you need to pass is the function arguments and an optional success function and optional error function.
 
-**Use gsi methods:**
-```JS
-api.gsi(methods, function(data) {
-   console.log('gsi data: ', data);
-});
-```
 **Create a vend:**
 ```JS
 api.createVend(itemId, itemSerial, days, hours, minutes, price, function() {
