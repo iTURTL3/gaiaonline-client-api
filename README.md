@@ -1,6 +1,12 @@
 # GaiaOnline Client API
 GaiaOnline Client API works by requiring the package in your NodeJS file then calling its functions. I made this API in 2015 but it still works exceptionally well in 2019.
 
+## Dependencies
+```
+npm install request
+npm install md5
+```
+
 ## Getting Started
 Require the gaiaonline.api.js module and create an instance of the API like the following example:
 
