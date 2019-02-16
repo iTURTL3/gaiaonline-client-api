@@ -6,10 +6,12 @@ module.exports = function(cookies, password) {
    /*
       VARIABLES & DEPENDENCIES.
    */
-   var self     = this;
-   self.md5     = require('md5');
-   self.request = require('request');
-   self.baseUrl = 'https://www.gaiaonline.com/';
+   var self      = this;
+   self.cookies  = cookies;
+   self.password = password;
+   self.md5      = require('md5');
+   self.request  = require('request');
+   self.baseUrl  = 'https://www.gaiaonline.com/';
 
    /*
       REUSABLE FUNCTIONS.
@@ -28,14 +30,14 @@ module.exports = function(cookies, password) {
    };
    self.getRequest = function(url, callback) {
       self.httpRequest('GET', self.baseUrl + url, {
-         'Cookie': cookies
+         'Cookie': self.cookies
       }, null, callback);
    };
    self.postRequest = function(url, post, callback) {
       self.httpRequest('POST', self.baseUrl + url, {
          'X-Requested-With': 'XMLHttpRequest',
          'Content-Type':     'application/x-www-form-urlencoded; charset=UTF-8',
-         'Cookie':           cookies
+         'Cookie':           self.cookies
       }, post, callback);
    };
    self.queryString = function(object) {
@@ -75,7 +77,7 @@ module.exports = function(cookies, password) {
       return data.match(patterns[pattern]);
    };
    self.createChap = function(nonce) {
-      return self.md5(self.md5(password) + nonce);
+      return self.md5(self.md5(self.password) + nonce);
    };
    self.useNonce = function(callback) {
       self.getRequest('api/v1/cashshop/generatenonce?' + self.queryString({
@@ -139,7 +141,7 @@ module.exports = function(cookies, password) {
          self.postRequest('marketplace/userstore/' + storeId + '/buy/', self.queryString({
             'step':     'submit',
             'id':       vendId,
-            'password': password,
+            'password': self.password,
             'nonce':    nonce
          }), function(data) {
             (self.pattern(data, 'buyVend') ? (success && success()) : (error && error()));
@@ -151,7 +153,7 @@ module.exports = function(cookies, password) {
          self.postRequest('marketplace/userstore/' + storeId + '/gcash/', self.queryString({
             'step':     'submit',
             'id':       vendId,
-            'password': password,
+            'password': self.password,
             'nonce':    nonce
          }), function(data) {
             (self.pattern(data, 'buyVend') ? (success && success()) : (error && error()));
@@ -164,7 +166,7 @@ module.exports = function(cookies, password) {
             'step':     'submit',
             'id':       vendId,
             'amount':   bidAmount,
-            'password': password,
+            'password': self.password,
             'nonce':    nonce
          }), function(data) {
             (self.pattern(data, 'bidOnVend') ? (success && success()) : (error && error()));
@@ -192,7 +194,7 @@ module.exports = function(cookies, password) {
       self.useNonce(function(nonce) {
          self.postRequest('marketplace/', self.queryString({
             'tradingpass': '1',
-            'password':    password,
+            'password':    self.password,
             'nonce':       nonce
          }), function(data) {
             (self.pattern(data, 'buyTradingPass') ? (success && success()) : (error && error()));
