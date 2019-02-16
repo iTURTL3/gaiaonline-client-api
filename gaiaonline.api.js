@@ -1,3 +1,6 @@
+/*
+   @https://github.com/jakemadness/gaiaonline-api
+*/
 module.exports = function(cookies, password) {
 
    /*
