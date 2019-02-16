@@ -1,16 +1,13 @@
 # GaiaOnline Client API
-GaiaOnline Client API works by including the script on the <b>gaiaonline.com</b> website (preferably in a userscript) then calling its functions. I made this API in 2015 but it still works exceptionally well in 2018.
-
-# Userscripts Using This API
-**vend script:** https://greasyfork.org/en/scripts/40448-gaiaonline-vend-modifications
+GaiaOnline Client API works by requiring the package in your NodeJS file then calling its functions. I made this API in 2015 but it still works exceptionally well in 2019.
 
 ## Getting Started
-include both gaiaonline.utilities.js and gaiaonline.api.js files on the gaiaonline website. Once you've included those files on the website you can create an instance of the API like the following example:
+Require the gaiaonline.api.js module and create an instance of the API like the following example:
 
 ```JS
-var password     = 'my account password';
-window.utilities = new window.gUtilities();
-window.api       = new window.gApi(utilities, password);
+var cookies  = 'gaiaonline cookies here';
+var password = 'gaiaonline password here';
+var api      = new (require('./gaiaonline.api.js'))(cookies, password);
 ```
 
 ## API Functions
