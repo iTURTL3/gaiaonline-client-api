@@ -35,9 +35,8 @@ module.exports = function(cookies, password) {
    };
    self.postRequest = function(url, post, callback) {
       self.httpRequest('POST', self.baseUrl + url, {
-         'X-Requested-With': 'XMLHttpRequest',
-         'Content-Type':     'application/x-www-form-urlencoded; charset=UTF-8',
-         'Cookie':           self.cookies
+         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         'Cookie':       self.cookies
       }, post, callback);
    };
    self.queryString = function(object) {
