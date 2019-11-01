@@ -193,6 +193,4 @@ api.inventory(page, perPage, function(inventory) {
 **known daily treat types:** <p>home, mygaia, market, forum, games, world</p>
 
 ## Author
-github: https://github.com/jakemadness  
 gaiaonline: https://www.gaiaonline.com/gsearch/users/jakemadness  
-youtube: https://www.youtube.com/channel/UCQ-V2VrQawc8Xi6b_mH8Law  
