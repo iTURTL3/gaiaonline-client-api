@@ -1,5 +1,5 @@
 # GaiaOnline Client API
-GaiaOnline Client API works by requiring the package in your NodeJS file then calling its functions. I made this API in 2015 but it still works exceptionally well in 2019. (This used to be a browser script but has been converted to NodeJS)
+GaiaOnline Client API works by requiring the package in your NodeJS file then calling its functions. I made this API in 2015 but it still works exceptionally well in 2019. (This use to be a browser script but has been converted to NodeJS)
 
 ## Dependencies
 ```
